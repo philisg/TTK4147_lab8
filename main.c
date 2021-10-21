@@ -30,6 +30,7 @@ void responseTask2(void) {
     rt_sem_p(&sem1, TM_INFINITE);
     rt_timer_spin(100*1000*1000); //100ms
     rt_printf("Task2\n");
+    rt_printf("Task2\n");
     return 0;
 }
 
