@@ -18,7 +18,7 @@ RT_TASK LOW_thread;
 RT_MUTEX mutex;
 #define TIME_UNIT 100
 
-RT_SEM sem1;
+RT_SEM sem1, sem2;
 int set_cpu(int cpu_number);
 
 void busy_wait_us(unsigned long delay){
@@ -28,6 +28,9 @@ void busy_wait_us(unsigned long delay){
 }
 void HIGH(void) {
 	set_cpu(T_CPU(0));
+
+    rt_sem_p(&sem2, TM_INFINITE);
+
     rt_task_sleep(2000);
     rt_sem_p(&sem1, TM_INFINITE);
     //rt_mutex_aquire($mutex, TM_INFINITE);
@@ -40,6 +43,9 @@ void HIGH(void) {
 
 void MEDIUM(void) {
 	set_cpu(T_CPU(0));
+
+    rt_sem_p(&sem2, TM_INFINITE);
+
     rt_task_sleep(1000);
     rt_printf("Task MED starts busy work\n");
     busy_wait_us(5*TIME_UNIT);
@@ -48,6 +54,9 @@ void MEDIUM(void) {
 
 void LOW(void) {
 	set_cpu(T_CPU(0));
+
+    rt_sem_p(&sem2, TM_INFINITE);
+
     rt_sem_p(&sem1, TM_INFINITE);
     rt_printf("Task LOW starts busy work\n");
     busy_wait_us(30*TIME_UNIT);
@@ -62,7 +71,8 @@ int main (void){
     rt_print_auto_init(1);
 
     rt_printf("The program has started!\n");
-    rt_sem_create(&sem1,"Semaphore1", 1, S_FIFO);
+    rt_sem_create(&sem1,"Semaphore1", 0, S_FIFO);
+    rt_sem_create(&sem2, "Semaphore2", 0, S_FIFO);
 
     rt_task_create(&HIGH_thread, "task-high", 0, 55, T_CPU(0));//creating task, 50=priority
     rt_task_create(&MEDIUM_thread, "task-medium", 0, 50, T_CPU(0));//creating task
@@ -75,10 +85,11 @@ int main (void){
     rt_task_sleep(500*1000*1000); //500ms
 
     //rt_sem_broadcast(&sem1);
-    //rt_sem_broadcast(&sem2);
+    rt_sem_broadcast(&sem2);
     rt_task_sleep(1000*1000*1000); //100ms
 
     rt_sem_delete(&sem1);
+    rt_sem_delete(&sem2);
 
     return 0;
     
