@@ -39,7 +39,7 @@ int main (void){
     //rt_sem_create(&sem2,"Semaphore2", 0, S_FIFO);
 
     
-    rt_task_shadow(NULL, "main", 0 ,99, T_CPU(0));
+    rt_task_shadow(NULL, "main" ,99, T_CPU(0));
     rt_task_start(&taskresponse_thread_main, NULL, NULL); //start the task
 
     rt_task_create(&taskresponse_thread_1, "task1", 0, 55, T_CPU(0));//creating task, 50=priority
