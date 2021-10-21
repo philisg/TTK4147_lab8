@@ -32,13 +32,15 @@ void HIGH(void) {
     rt_sem_p(&sem2, TM_INFINITE);
 
     rt_task_sleep(2000);
-    rt_sem_p(&sem1, TM_INFINITE);
-    //rt_mutex_aquire($mutex, TM_INFINITE);
+    //rt_sem_p(&sem1, TM_INFINITE);
+    rt_mutex_aquire($mutex, TM_INFINITE);
+
     rt_printf("Task HIGH starts busy work\n");
     busy_wait_us(2*TIME_UNIT);
     rt_printf("Task HIGH ends busy work\n");
-    rt_sem_v(&sem1);
-    //rt_mutex_release(&mutex);
+
+    //rt_sem_v(&sem1);
+    rt_mutex_release(&mutex);
 }
 
 void MEDIUM(void) {
@@ -57,11 +59,15 @@ void LOW(void) {
 
     rt_sem_p(&sem2, TM_INFINITE);
 
-    rt_sem_p(&sem1, TM_INFINITE);
+    //rt_sem_p(&sem1, TM_INFINITE);
+    rt_mutex_acquire(&mutex, TM_INFINITE);
+
     rt_printf("Task LOW starts busy work\n");
     busy_wait_us(1000*TIME_UNIT);
     rt_printf("Task LOW ends busy work\n");
-    rt_sem_v(&sem1);
+
+    //rt_sem_v(&sem1);
+    rt_mutex_release(&mutex);
 }
 
 
@@ -73,6 +79,8 @@ int main (void){
     rt_printf("The program has started!\n");
     rt_sem_create(&sem1,"Semaphore1", 1, S_FIFO);
     rt_sem_create(&sem2, "Semaphore2", 0, S_FIFO);
+
+    rt_mutex_create(&mutex, NULL);
 
     rt_task_create(&HIGH_thread, "task-high", 0, 55, T_CPU(0));//creating task, 50=priority
     rt_task_create(&MEDIUM_thread, "task-medium", 0, 50, T_CPU(0));//creating task
@@ -90,6 +98,7 @@ int main (void){
 
     rt_sem_delete(&sem1);
     rt_sem_delete(&sem2);
+    rt_mutex_delete(&mutex);
 
     return 0;
     
