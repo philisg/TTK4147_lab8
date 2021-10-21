@@ -12,7 +12,6 @@
 
 RT_TASK taskresponse_thread_1;
 RT_TASK taskresponse_thread_2;
-RT_TASK taskresponse_thread_main;
 RT_SEM sem1, sem2;
 int set_cpu(int cpu_number);
 
@@ -37,15 +36,13 @@ void responseTask2(void) {
 
 int main (void){
     mlockall(MCL_CURRENT|MCL_FUTURE);
+    rt_task_shadow(NULL, NULL ,99, T_CPU(0));
     rt_print_auto_init(1);
 
     rt_printf("The program has started!\n");
     rt_sem_create(&sem1,"Semaphore1", 0, S_FIFO);
     //rt_sem_create(&sem2,"Semaphore2", 0, S_FIFO);
 
-    
-    rt_task_shadow(NULL, "main" ,99, T_CPU(0));
-    rt_task_start(&taskresponse_thread_main, NULL, NULL); //start the task
 
     rt_task_create(&taskresponse_thread_1, "task1", 0, 55, T_CPU(0));//creating task, 50=priority
     rt_task_create(&taskresponse_thread_2, "task2", 0, 50, T_CPU(0));//creating task
