@@ -25,25 +25,27 @@ void HIGH(void) {
 	set_cpu(T_CPU(0));
     rt_task_sleep(2000);
     rt_sem_p(&sem1, TM_INFINITE);
+    rt_printf("Task HIGH starts busy work");
     busy_wait_us(2);
+    rt_printf("Task HIGH ends busy work");
     rt_sem_v(&sem1);
 }
 
 void MEDIUM(void) {
 	set_cpu(T_CPU(0));
     rt_task_sleep(1000);
+    rt_printf("Task MED starts busy work");
     busy_wait_us(5);
-    rt_printf("Tas MEDIUM!\n");
-
+    rt_printf("Task MED ends busy work!\n");
 }
 
 void LOW(void) {
 	set_cpu(T_CPU(0));
     rt_sem_p(&sem1, TM_INFINITE);
-    rt_printf("LOW\n");
+    rt_printf("Task LOW starts busy work\n");
     busy_wait_us(3);
+    rt_printf("Task LOW ends busy work");
     rt_sem_v(&sem1);
-
 }
 
 
