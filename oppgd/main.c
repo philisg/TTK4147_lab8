@@ -17,6 +17,8 @@ RT_MUTEX mutexA, mutexB;
 RT_TASK task_l , task_m, task_h;
 RT_SEM sem;
 
+int set_cpu(int cpu_number);
+
 void busy_wait_us(unsigned long delay){
     for(; delay > 0; delay--){
         rt_timer_spin(1000);
@@ -43,6 +45,7 @@ void low_function(void){
 }
 
 void medium_function(void){
+    set_cpu(T_CPU(0));
     rt_task_sleep(TIME_UNIT * 1000);
     rt_printf("MEDIUM THREAD HAS STARTED! \n");
     busy_wait_us(5*TIME_UNIT);
@@ -91,4 +94,11 @@ int main(){
     rt_mutex_delete(&mutexB);
     rt_sem_delete(&sem);
 	return 0;
+}
+
+int set_cpu(int cpu_number) {
+	cpu_set_t cpu;
+	CPU_ZERO(&cpu);
+	CPU_SET(cpu_number, &cpu);
+	return pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpu);
 }
