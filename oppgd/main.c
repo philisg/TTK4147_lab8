@@ -24,6 +24,7 @@ void busy_wait_us(unsigned long delay){
 }
 
 void low_function(void){
+    set_cpu(T_CPU(0));
     rt_sem_p(&sem, TM_INFINITE);
 
     rt_mutex_acquire(&mutexA, TM_INFINITE);
@@ -49,6 +50,7 @@ void medium_function(void){
 }
 
 void high_function(void){
+    set_cpu(T_CPU(0));
     rt_sem_p(&sem, TM_INFINITE);
 
     rt_task_sleep(TIME_UNIT * 5);
