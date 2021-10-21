@@ -21,7 +21,7 @@ void busy_wait_us(unsigned long delay){
         rt_timer_spin(1000);
     }
 }
-void High_task(void) {
+void HIGH(void) {
 	set_cpu(T_CPU(0));
     rt_task_sleep(2000);
     rt_sem_p(&sem1, TM_INFINITE);
@@ -31,7 +31,7 @@ void High_task(void) {
     rt_sem_v(&sem1);
 }
 
-void Medium_task(void) {
+void MEDIUM(void) {
 	set_cpu(T_CPU(0));
     rt_task_sleep(1000);
     rt_printf("Task MED starts busy work");
@@ -39,7 +39,7 @@ void Medium_task(void) {
     rt_printf("Task MED ends busy work!\n");
 }
 
-void Low_task(void) {
+void LOW(void) {
 	set_cpu(T_CPU(0));
     rt_sem_p(&sem1, TM_INFINITE);
     rt_printf("Task LOW starts busy work\n");
@@ -63,9 +63,9 @@ int main (void){
     rt_task_create(&MEDIUM_thread, "task2", 0, 50, T_CPU(0));//creating task
     rt_task_create(&LOW_thread, "task3", 0, 40, T_CPU(0));//creating task  rt_task_create(&MEDIUM, "task2", 0, 50, T_CPU(0));//creating task
 
-    rt_task_start(&LOW_thread &Low_task, NULL); //start the task
-    rt_task_start(&MEDIUM_thread, &Medium_task, NULL); //start the task
-    rt_task_start(&HIGH_thread, &High_task, NULL); //start the task_
+    rt_task_start(&LOW_thread &LOW, NULL); //start the task
+    rt_task_start(&MEDIUM_thread, &MEDIUM, NULL); //start the task
+    rt_task_start(&HIGH_thread, &HIGH, NULL); //start the task_
 
     rt_task_sleep(500*1000*1000); //500ms
 
