@@ -4,6 +4,12 @@
 #include <sys/mman.h>
 #include <rtdk.h>
 #include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sched.h>
+#include <signal.h>
+#include <unistd.h>
+#include <native/sem.h>
 
 #define HIGH 80
 #define MEDIUM 50
