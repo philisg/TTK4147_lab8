@@ -45,7 +45,7 @@ int main (void){
 
 
     rt_task_create(&taskresponse_thread_1, "task1", 0, 55, T_CPU(0));//creating task, 50=priority
-    rt_task_create(&taskresponse_thread_2, "task2", 0, 50, T_CPU(0));//creating task
+    rt_task_create(&taskresponse_thread_2, "task2", 0, 60, T_CPU(0));//creating task
         
     rt_task_start(&taskresponse_thread_1, &responseTask1, NULL); //start the task
     rt_task_start(&taskresponse_thread_2, &responseTask2, NULL); //start the task
