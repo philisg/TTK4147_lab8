@@ -26,6 +26,7 @@ void responseTask1(void) {
 
 void responseTask2(void) {
 	set_cpu(T_CPU(0));
+    rt_timer_spin(50*1000*1000); //100ms
     rt_sem_p(&sem1, TM_INFINITE);
     rt_timer_spin(100*1000*1000); //100ms
     rt_sem_v(&sem1);
