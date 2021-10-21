@@ -19,16 +19,13 @@ int set_cpu(int cpu_number);
 void responseTask1(void) {
 	set_cpu(T_CPU(0));
     rt_sem_p(&sem1, TM_INFINITE);
-    rt_timer_spin(100*1000*1000); //100ms
     rt_sem_v(&sem1);
     rt_printf("Task1\n");
 }
 
 void responseTask2(void) {
 	set_cpu(T_CPU(0));
-    rt_timer_spin(50*1000*1000); //100ms
     rt_sem_p(&sem1, TM_INFINITE);
-    rt_timer_spin(100*1000*1000); //100ms
     rt_sem_v(&sem1);
     rt_printf("Task2\n");
 
@@ -51,11 +48,11 @@ int main (void){
     rt_task_start(&taskresponse_thread_1, &responseTask1, NULL); //start the task
     rt_task_start(&taskresponse_thread_2, &responseTask2, NULL); //start the task
 
-    rt_timer_spin(500000000); //500ms
+    rt_task_sleep(500000000); //500ms
 
     rt_sem_broadcast(&sem1);
     //rt_sem_broadcast(&sem2);
-    rt_timer_spin(100000000); //100ms
+    rt_task_sleep(100000000); //100ms
 
     rt_sem_delete(&sem1);
 
