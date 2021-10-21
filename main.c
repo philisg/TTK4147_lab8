@@ -71,7 +71,7 @@ int main (void){
     rt_print_auto_init(1);
 
     rt_printf("The program has started!\n");
-    rt_sem_create(&sem1,"Semaphore1", 0, S_FIFO);
+    rt_sem_create(&sem1,"Semaphore1", 1, S_FIFO);
     rt_sem_create(&sem2, "Semaphore2", 0, S_FIFO);
 
     rt_task_create(&HIGH_thread, "task-high", 0, 55, T_CPU(0));//creating task, 50=priority
