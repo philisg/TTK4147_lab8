@@ -67,11 +67,11 @@ int main (void){
     rt_task_start(&MEDIUM, &MEDIUM_thread, NULL); //start the task
     rt_task_start(&HIGH, &HIGH_thread, NULL); //start the task_
 
-    rt_task_sleep(500000000); //500ms
+    rt_task_sleep(500*1000*1000); //500ms
 
     //rt_sem_broadcast(&sem1);
     //rt_sem_broadcast(&sem2);
-    rt_task_sleep(100000000); //100ms
+    rt_task_sleep(1000*1000*1000); //100ms
 
     rt_sem_delete(&sem1);
 
