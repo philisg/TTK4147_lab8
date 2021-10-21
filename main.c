@@ -13,6 +13,7 @@
 RT_TASK HIGH_thread;
 RT_TASK MEDIUM_thread;
 RT_TASK LOW_thread;
+
 RT_SEM sem1;
 int set_cpu(int cpu_number);
 
@@ -56,12 +57,10 @@ int main (void){
 
     rt_printf("The program has started!\n");
     rt_sem_create(&sem1,"Semaphore1", 1, S_FIFO);
-    //rt_sem_create(&sem2,"Semaphore2", 0, S_FIFO);
 
-
-    rt_task_create(&HIGH_thread, "task1", 0, 55, T_CPU(0));//creating task, 50=priority
-    rt_task_create(&MEDIUM_thread, "task2", 0, 50, T_CPU(0));//creating task
-    rt_task_create(&LOW_thread, "task3", 0, 40, T_CPU(0));//creating task  rt_task_create(&MEDIUM, "task2", 0, 50, T_CPU(0));//creating task
+    rt_task_create(&HIGH_thread, "task-high", 0, 55, T_CPU(0));//creating task, 50=priority
+    rt_task_create(&MEDIUM_thread, "task-medium", 0, 50, T_CPU(0));//creating task
+    rt_task_create(&LOW_thread, "task-low", 0, 40, T_CPU(0)); //creating task  rt_task_create(&MEDIUM, "task2", 0, 50, T_CPU(0));//creating task
 
     rt_task_start(&LOW_thread &LOW, NULL); //start the task
     rt_task_start(&MEDIUM_thread, &MEDIUM, NULL); //start the task
