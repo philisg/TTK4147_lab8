@@ -57,7 +57,7 @@ int main (void){
     rt_timer_spin(100*1000*1000); //100ms
 
 
-    //broadcast sem!
+    //broadcast sem! /
     rt_sem_delete(&sem1);
 
     return 0;
