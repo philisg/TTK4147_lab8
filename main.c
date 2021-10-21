@@ -50,11 +50,11 @@ int main (void){
     rt_task_start(&taskresponse_thread_1, &responseTask1, NULL); //start the task
     rt_task_start(&taskresponse_thread_2, &responseTask2, NULL); //start the task
 
-    rt_timer_spin(500*1000*1000); //100ms
+    rt_timer_spin(500000000); //100ms
 
     rt_sem_broadcast(&sem1);
     //rt_sem_broadcast(&sem2);
-    rt_timer_spin(100*1000*1000); //100ms
+    rt_timer_spin(100000000); //100ms
 
 
     //broadcast sem! /
