@@ -62,7 +62,7 @@ int main (void){
     rt_task_create(&MEDIUM_thread, "task-medium", 0, 50, T_CPU(0));//creating task
     rt_task_create(&LOW_thread, "task-low", 0, 40, T_CPU(0)); //creating task  rt_task_create(&MEDIUM, "task2", 0, 50, T_CPU(0));//creating task
 
-    rt_task_start(&LOW_thread &LOW, NULL); //start the task
+    rt_task_start(&LOW_thread, &LOW, NULL); //start the task
     rt_task_start(&MEDIUM_thread, &MEDIUM, NULL); //start the task
     rt_task_start(&HIGH_thread, &HIGH, NULL); //start the task_
 
