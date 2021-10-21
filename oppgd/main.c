@@ -11,10 +11,6 @@
 #include <unistd.h>
 #include <native/sem.h>
 
-#define HIGH 80
-#define MEDIUM 50
-#define LOW 10
-
 #define TIME_UNIT 100
 
 RT_MUTEX mutexA, mutexB;
@@ -75,9 +71,9 @@ int main(){
     rt_mutex_create(&mutexB, NULL);
     rt_sem_create(&sem,"Semaphore", 1, S_FIFO);
 
-	rt_task_create(&task_l, "task_low", 0, 40, T_CPU(0));
+	rt_task_create(&task_l, "task_low", 0, 10, T_CPU(0));
 	//rt_task_create(&task_m, NULL, 0, MEDIUM, T_CPU(0));
-	rt_task_create(&task_h, "task_high", 0, 50, T_CPU(0));
+	rt_task_create(&task_h, "task_high", 0, 80, T_CPU(0));
 
 	rt_task_start(&task_l, (void*)low_function, NULL);
 	//rt_task_start(&task_m, (void*)medium_function, NULL);
