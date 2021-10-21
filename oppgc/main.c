@@ -28,14 +28,14 @@ void low_function(void){
     rt_printf("LOW THREAD HAS FINISHED! \n");
 }
 
-void MEDIUM(void){
+void medium_function(void){
     rt_task_sleep(TIME_UNIT * 1000);
     rt_printf("MEDIUM THREAD HAS STARTED! \n");
     busy_wait_us(5*TIME_UNIT);
     rt_printf("MEDIUM THREAD HAS FINISHED! \n");
 }
 
-void HIGH(void){
+void high_function(void){
     rt_task_sleep(TIME_UNIT * 2000);
     rt_mutex_acquire(&mutex, TM_INFINITE);
     rt_printf("HIGH THREAD HAS STARTED! \n");
@@ -52,13 +52,13 @@ int main(){
 
 
 
-	rt_task_create(&task_l, NULL, 0, low-task, T_CPU(0));
-	rt_task_create(&task_m, NULL, 0, med-task, T_CPU(0));
-	rt_task_create(&task_h, NULL, 0, high-task, T_CPU(0));
+	rt_task_create(&task_l, NULL, 0, LOW, T_CPU(0));
+	rt_task_create(&task_m, NULL, 0, MEDIUM, T_CPU(0));
+	rt_task_create(&task_h, NULL, 0, HIGH, T_CPU(0));
 
-	rt_task_start(&task_l, (void*)LOW, NULL);
-	rt_task_start(&task_m, (void*)MEDIUM, NULL);
-	rt_task_start(&task_h, (void*)HIGH, NULL);
+	rt_task_start(&task_l, (void*)low_function, NULL);
+	rt_task_start(&task_m, (void*)medium_function, NULL);
+	rt_task_start(&task_h, (void*)high_function, NULL);
 	rt_task_sleep(100000000);
 	//rt_sem_broadcast(&sem1);
 	rt_task_sleep(100000000);
