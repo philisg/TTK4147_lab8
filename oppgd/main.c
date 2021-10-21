@@ -51,7 +51,7 @@ void medium_function(void){
 void high_function(void){
     rt_sem_p(&sem, TM_INFINITE);
 
-    rt_task_sleep(TIME_UNIT * 1);
+    rt_task_sleep(TIME_UNIT * 5);
     rt_mutex_acquire(&mutexB, TM_INFINITE);
     rt_printf("HIGH THREAD HAS STARTED! \n");
     busy_wait_us(1*TIME_UNIT);
@@ -87,6 +87,6 @@ int main(){
 
 	rt_mutex_delete(&mutexA);
     rt_mutex_delete(&mutexB);
-     rt_sem_delete(&sem);
+    rt_sem_delete(&sem);
 	return 0;
 }
