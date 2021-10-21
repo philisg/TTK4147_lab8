@@ -74,7 +74,7 @@ int main(){
 	rt_print_auto_init(1);
 	rt_mutex_create(&mutexA, NULL);
     rt_mutex_create(&mutexB, NULL);
-    rt_sem_create(&sem,"Semaphore", 1, S_FIFO);
+    rt_sem_create(&sem,"Semaphore", 0, S_FIFO);
 
 	rt_task_create(&task_l, "task_low", 0, 10, T_CPU(0));
 	//rt_task_create(&task_m, NULL, 0, MEDIUM, T_CPU(0));
