@@ -21,12 +21,14 @@ void responseTask1(void) {
 	set_cpu(T_CPU(0));
     rt_sem_p(&sem1, TM_INFINITE);
     rt_timer_spin(100*1000*1000); //100ms
+    return 0;
 }
 
 void responseTask2(void) {
 	set_cpu(T_CPU(0));
     rt_sem_p(&sem1, TM_INFINITE);
     rt_timer_spin(100*1000*1000); //100ms
+    return 0;
 }
 
 
@@ -56,7 +58,7 @@ int main (void){
 
     //broadcast sem!
     rt_sem_delete(&sem1);
-    
+
     return 0;
     
 }
