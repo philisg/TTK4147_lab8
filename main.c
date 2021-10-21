@@ -59,7 +59,7 @@ void LOW(void) {
 
     rt_sem_p(&sem1, TM_INFINITE);
     rt_printf("Task LOW starts busy work\n");
-    busy_wait_us(30*TIME_UNIT);
+    busy_wait_us(1000*TIME_UNIT);
     rt_printf("Task LOW ends busy work\n");
     rt_sem_v(&sem1);
 }
