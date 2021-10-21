@@ -66,10 +66,12 @@ int main(){
 	rt_task_start(&task_l, (void*)low_function, NULL);
 	//rt_task_start(&task_m, (void*)medium_function, NULL);
 	rt_task_start(&task_h, (void*)high_function, NULL);
-    
+
 	rt_task_sleep(100000000);
 	//rt_sem_broadcast(&sem1);
 	rt_task_sleep(100000000);
+
+    while(1);
 
 	rt_mutex_delete(&mutexA);
     rt_mutex_delete(&mutexB);
