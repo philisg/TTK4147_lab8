@@ -53,21 +53,21 @@ int main (void){
     rt_print_auto_init(1);
 
     rt_printf("The program has started!\n");
-    rt_sem_create(&sem1,"Semaphore1", 0, S_FIFO);
+    rt_sem_create(&sem1,"Semaphore1", 1, S_FIFO);
     //rt_sem_create(&sem2,"Semaphore2", 0, S_FIFO);
 
 
     rt_task_create(&HIGH_thread, "task1", 0, 55, T_CPU(0));//creating task, 50=priority
     rt_task_create(&MEDIUM_thread, "task2", 0, 50, T_CPU(0));//creating task
     rt_task_create(&LOW_thread, "task3", 0, 40, T_CPU(0));//creating task  rt_task_create(&MEDIUM, "task2", 0, 50, T_CPU(0));//creating task
-        
-    rt_task_start(&HIGH, &HIGH_thread, NULL); //start the task_
-    rt_task_start(&MEDIUM, &MEDIUM_thread, NULL); //start the task
+
     rt_task_start(&LOW, &LOW_thread, NULL); //start the task
+    rt_task_start(&MEDIUM, &MEDIUM_thread, NULL); //start the task
+    rt_task_start(&HIGH, &HIGH_thread, NULL); //start the task_
 
     rt_task_sleep(500000000); //500ms
 
-    rt_sem_broadcast(&sem1);
+    //rt_sem_broadcast(&sem1);
     //rt_sem_broadcast(&sem2);
     rt_task_sleep(100000000); //100ms
 
