@@ -56,9 +56,7 @@ int main (void){
 
     //broadcast sem!
     rt_sem_delete(&sem1);
-
-
-    while(1){};
+    
     return 0;
     
 }
