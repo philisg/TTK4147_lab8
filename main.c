@@ -36,7 +36,7 @@ void responseTask2(void) {
 
 int main (void){
     mlockall(MCL_CURRENT|MCL_FUTURE);
-    rt_task_shadow(NULL, NULL ,99, T_CPU(0));
+    rt_task_shadow(NULL, NULL ,90, T_CPU(0));
     rt_print_auto_init(1);
 
     rt_printf("The program has started!\n");
@@ -50,14 +50,12 @@ int main (void){
     rt_task_start(&taskresponse_thread_1, &responseTask1, NULL); //start the task
     rt_task_start(&taskresponse_thread_2, &responseTask2, NULL); //start the task
 
-    rt_timer_spin(500000000); //100ms
+    rt_timer_spin(500000000); //500ms
 
     rt_sem_broadcast(&sem1);
     //rt_sem_broadcast(&sem2);
     rt_timer_spin(100000000); //100ms
 
-
-    //broadcast sem! /
     rt_sem_delete(&sem1);
 
     return 0;
