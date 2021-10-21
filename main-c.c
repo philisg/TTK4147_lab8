@@ -9,6 +9,7 @@
 #include <native/timer.h>
 #include <sys/mman.h>
 #include <native/sem.h>
+#include <native/mutex.h>
 
 RT_TASK HIGH_thread;
 RT_TASK MEDIUM_thread;
