@@ -9,10 +9,14 @@
 #include <native/timer.h>
 #include <sys/mman.h>
 #include <native/sem.h>
+#include <native/mutex.h>
 
 RT_TASK HIGH_thread;
 RT_TASK MEDIUM_thread;
 RT_TASK LOW_thread;
+
+RT_MUTEX mutex;
+#define TIME_UNIT 100
 
 RT_SEM sem1;
 int set_cpu(int cpu_number);
@@ -26,17 +30,19 @@ void HIGH(void) {
 	set_cpu(T_CPU(0));
     rt_task_sleep(2000);
     rt_sem_p(&sem1, TM_INFINITE);
+    //rt_mutex_aquire($mutex, TM_INFINITE);
     rt_printf("Task HIGH starts busy work\n");
-    busy_wait_us(2);
+    busy_wait_us(2*TIME_UNIT);
     rt_printf("Task HIGH ends busy work\n");
     rt_sem_v(&sem1);
+    //rt_mutex_release(&mutex);
 }
 
 void MEDIUM(void) {
 	set_cpu(T_CPU(0));
     rt_task_sleep(1000);
     rt_printf("Task MED starts busy work\n");
-    busy_wait_us(5);
+    busy_wait_us(5*TIME_UNIT);
     rt_printf("Task MED ends busy work!\n");
 }
 
@@ -44,7 +50,7 @@ void LOW(void) {
 	set_cpu(T_CPU(0));
     rt_sem_p(&sem1, TM_INFINITE);
     rt_printf("Task LOW starts busy work\n");
-    busy_wait_us(3);
+    busy_wait_us(30*TIME_UNIT);
     rt_printf("Task LOW ends busy work\n");
     rt_sem_v(&sem1);
 }
