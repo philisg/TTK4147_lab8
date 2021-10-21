@@ -21,7 +21,7 @@ void responseTask1(void) {
 	set_cpu(T_CPU(0));
     rt_sem_p(&sem1, TM_INFINITE);
     rt_timer_spin(100*1000*1000); //100ms
-    rt_printf("Task1");
+    rt_printf("Task1\n");
     return 0;
 }
 
@@ -29,7 +29,7 @@ void responseTask2(void) {
 	set_cpu(T_CPU(0));
     rt_sem_p(&sem1, TM_INFINITE);
     rt_timer_spin(100*1000*1000); //100ms
-    rt_printf("Task2");
+    rt_printf("Task2\n");
 
     return 0;
 }
