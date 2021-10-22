@@ -101,7 +101,8 @@ int main(){
 	rt_sem_broadcast(&sem);
 	rt_task_sleep(100*1000*1000); //100ms
 
-    while(1);
+    sleep(5);
+    rt_printf("Main Finished");
 
 	rt_mutex_delete(&mutexA);
     rt_mutex_delete(&mutexB);
