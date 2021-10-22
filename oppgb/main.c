@@ -15,7 +15,7 @@
 
 RT_SEM sem1;
 RT_TASK task_l , task_m, task_h;
-    
+int set_cpu(int cpu_number);
 
 void busy_wait_us(unsigned long delay){
 		for(; delay > 0; delay--){
@@ -24,6 +24,7 @@ void busy_wait_us(unsigned long delay){
 }
 
 void low_function(void){
+    set_cpu(T_CPU(0));
     rt_sem_p(&sem1, TM_INFINITE);
     rt_printf("LOW THREAD HAS STARTED! \n");
     busy_wait_us(3*TIME_UNIT);
@@ -32,6 +33,7 @@ void low_function(void){
 }
 
 void medium_function(void){
+    set_cpu(T_CPU(0));
     rt_task_sleep(TIME_UNIT * 1000);
     rt_printf("MEDIUM THREAD HAS STARTED! \n");
     busy_wait_us(5*TIME_UNIT);
@@ -39,6 +41,7 @@ void medium_function(void){
 }
 
 void high_function(void){
+    set_cpu(T_CPU(0));
     rt_task_sleep(TIME_UNIT * 2000);
     rt_sem_p(&sem1, TM_INFINITE);
     rt_printf("HIGH THREAD HAS STARTED! \n");
@@ -68,4 +71,11 @@ int main(){
 
 	rt_sem_delete(&sem1);
 	return 0;
+}
+
+int set_cpu(int cpu_number) {
+	cpu_set_t cpu;
+	CPU_ZERO(&cpu);
+	CPU_SET(cpu_number, &cpu);
+	return pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpu);
 }
