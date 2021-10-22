@@ -11,7 +11,7 @@
 #include <unistd.h>
 #include <native/sem.h>
 
-#define TIME_UNIT 100
+#define TIME_UNIT 10000
 
 RT_MUTEX mutexA, mutexB;
 RT_TASK task_l , task_h;
@@ -22,7 +22,7 @@ int set_cpu(int cpu_number);
 
 void busy_wait_us(unsigned long delay){
     for(; delay > 0; delay--){
-        rt_timer_spin(1000);
+        rt_timer_spin(TIME_UNIT);
     }
 }
 
@@ -35,20 +35,20 @@ void low_function(void){
     rt_mutex_acquire(&mutexA, TM_INFINITE);
     rt_printf("l-func takes mutexA \n");
 
-    busy_wait_us(3*TIME_UNIT);
+    busy_wait_us(3);
     rt_printf("l-func done busy waiting \n");
 
     rt_mutex_acquire(&mutexB, TM_INFINITE);
     rt_printf("l-func takes mutexB \n");
 
-    busy_wait_us(3*TIME_UNIT);
+    busy_wait_us(3);
     rt_printf("l-func done busy waiting \n");
 
     rt_mutex_release(&mutexB);
     rt_mutex_release(&mutexA);
     rt_printf("l-func released mutexes \n");
 
-    busy_wait_us(1*TIME_UNIT);
+    busy_wait_us(1);
     rt_printf("LOW THREAD HAS FINISHED! \n");
 }
 
@@ -64,20 +64,20 @@ void high_function(void){
     rt_mutex_acquire(&mutexB, TM_INFINITE);
     rt_printf("h-func takes mutexB \n");
 
-    busy_wait_us(1*TIME_UNIT);
+    busy_wait_us(1);
     rt_printf("h-func done busy waiting \n");
 
     rt_mutex_acquire(&mutexA, TM_INFINITE);
     rt_printf("h-func takes mutexA \n");
 
-    busy_wait_us(2*TIME_UNIT);
+    busy_wait_us(2);
     rt_printf("h-func done busy waiting \n");
 
     rt_mutex_release(&mutexA);
     rt_mutex_release(&mutexB);
     rt_printf("h-func released mutexes \n");
 
-    busy_wait_us(1*TIME_UNIT);
+    busy_wait_us(1);
     rt_printf("HIGH THREAD HAS FINISHED! \n");
 }
 
