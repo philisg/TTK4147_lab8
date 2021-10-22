@@ -27,7 +27,7 @@ void low_function(void){
     set_cpu(T_CPU(0));
     rt_sem_p(&sem1, TM_INFINITE);
     rt_printf("LOW THREAD HAS STARTED! \n");
-    busy_wait_us(3*TIME_UNIT);
+    busy_wait_us(3);
     rt_sem_v(&sem1);
     rt_printf("LOW THREAD HAS RUN! \n");
 }
