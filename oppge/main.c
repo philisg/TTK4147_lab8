@@ -35,7 +35,7 @@ void low_function(void){
     rt_mutex_acquire(&mutexA, TM_INFINITE);
     rt_printf("l-func takes mutexA \n");
 
-    rt_task_set_priority(&task_l, 81);
+    rt_task_set_priority(NULL, 81);
 
     busy_wait_us(3);
     rt_printf("l-func done busy waiting \n");
@@ -50,7 +50,7 @@ void low_function(void){
     rt_mutex_release(&mutexA);
     rt_printf("l-func released mutexes \n");
 
-    rt_task_set_priority(&task_l, 70);
+    rt_task_set_priority(NULL, 70);
 
     busy_wait_us(1);
     rt_printf("LOW THREAD HAS FINISHED! \n");
