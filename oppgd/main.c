@@ -83,12 +83,13 @@ void high_function(void){
 
 int main(){
 	mlockall(MCL_CURRENT | MCL_FUTURE);
+    rt_print_auto_init(1);
 	rt_task_shadow(NULL, NULL, 90, T_CPU(0));
-	rt_print_auto_init(1);
+
 
 	rt_mutex_create(&mutexA, NULL);
     rt_mutex_create(&mutexB, NULL);
-    rt_sem_create(&sem,"Semaphore", 0, S_FIFO);
+    rt_sem_create(&sem,"Semaphore", 0, S_PRIO);
 
 	rt_task_create(&task_l, "task_low", 0, 70, T_CPU(0));
 	rt_task_create(&task_h, "task_high", 0, 80, T_CPU(0));
