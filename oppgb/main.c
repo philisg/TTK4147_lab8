@@ -34,18 +34,18 @@ void low_function(void){
 
 void medium_function(void){
     set_cpu(T_CPU(0));
-    rt_task_sleep(TIME_UNIT * 1000);
+    rt_task_sleep(TIME_UNIT * 1);
     rt_printf("MEDIUM THREAD HAS STARTED! \n");
-    busy_wait_us(5*TIME_UNIT);
+    busy_wait_us(5);
     rt_printf("MEDIUM THREAD HAS RUN! \n");
 }
 
 void high_function(void){
     set_cpu(T_CPU(0));
-    rt_task_sleep(TIME_UNIT * 2000);
+    rt_task_sleep(TIME_UNIT * 2);
     rt_sem_p(&sem1, TM_INFINITE);
     rt_printf("HIGH THREAD HAS STARTED! \n");
-    busy_wait_us(2*TIME_UNIT);
+    busy_wait_us(2);
     rt_sem_v(&sem1);
     rt_printf("HIGH THREAD HAS RUN! \n");
 }
