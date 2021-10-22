@@ -26,24 +26,24 @@ void busy_wait_us(unsigned long delay){
         rt_timer_spin(1000);
     }
 }
-void HIGH(void) {
+void high_function(void) {
 	set_cpu(T_CPU(0));
 
     rt_sem_p(&sem2, TM_INFINITE);
 
     rt_task_sleep(2000);
-    //rt_sem_p(&sem1, TM_INFINITE);
-    rt_mutex_aquire($mutex, TM_INFINITE);
+    rt_sem_p(&sem1, TM_INFINITE);
+    //rt_mutex_aquire($mutex, TM_INFINITE);
 
     rt_printf("Task HIGH starts busy work\n");
     busy_wait_us(2*TIME_UNIT);
     rt_printf("Task HIGH ends busy work\n");
 
-    //rt_sem_v(&sem1);
-    rt_mutex_release(&mutex);
+    rt_sem_v(&sem1);
+    //rt_mutex_release(&mutex);
 }
 
-void MEDIUM(void) {
+void medium_function(void) {
 	set_cpu(T_CPU(0));
 
     rt_sem_p(&sem2, TM_INFINITE);
@@ -54,20 +54,20 @@ void MEDIUM(void) {
     rt_printf("Task MED ends busy work!\n");
 }
 
-void LOW(void) {
+void low_function(void) {
 	set_cpu(T_CPU(0));
 
     rt_sem_p(&sem2, TM_INFINITE);
 
-    //rt_sem_p(&sem1, TM_INFINITE);
-    rt_mutex_acquire(&mutex, TM_INFINITE);
+    rt_sem_p(&sem1, TM_INFINITE);
+    //rt_mutex_acquire(&mutex, TM_INFINITE);
 
     rt_printf("Task LOW starts busy work\n");
     busy_wait_us(1000*TIME_UNIT);
     rt_printf("Task LOW ends busy work\n");
 
-    //rt_sem_v(&sem1);
-    rt_mutex_release(&mutex);
+    rt_sem_v(&sem1);
+    //rt_mutex_release(&mutex);
 }
 
 
@@ -80,21 +80,24 @@ int main (void){
     rt_sem_create(&sem1,"Semaphore1", 1, S_FIFO);
     rt_sem_create(&sem2, "Semaphore2", 0, S_FIFO);
 
-    rt_mutex_create(&mutex, NULL);
+    //rt_mutex_create(&mutex, NULL);
 
     rt_task_create(&HIGH_thread, "task-high", 0, 55, T_CPU(0));//creating task, 50=priority
     rt_task_create(&MEDIUM_thread, "task-medium", 0, 50, T_CPU(0));//creating task
     rt_task_create(&LOW_thread, "task-low", 0, 40, T_CPU(0)); //creating task  rt_task_create(&MEDIUM, "task2", 0, 50, T_CPU(0));//creating task
 
-    rt_task_start(&LOW_thread, &LOW, NULL); //start the task
-    rt_task_start(&MEDIUM_thread, &MEDIUM, NULL); //start the task
-    rt_task_start(&HIGH_thread, &HIGH, NULL); //start the task_
+    rt_task_start(&LOW_thread, &low_function, NULL); //start the task
+    rt_task_start(&MEDIUM_thread, &medium_function, NULL); //start the task
+    rt_task_start(&HIGH_thread, &high_function, NULL); //start the task_
 
     rt_task_sleep(500*1000*1000); //500ms
 
-    //rt_sem_broadcast(&sem1);
-    rt_sem_broadcast(&sem2);
+    rt_sem_broadcast(&sem1);
+    //rt_sem_broadcast(&sem2);
     rt_task_sleep(1000*1000*1000); //100ms
+
+    sleep(5);
+    rt_printf("Main finished\n");
 
     rt_sem_delete(&sem1);
     rt_sem_delete(&sem2);
