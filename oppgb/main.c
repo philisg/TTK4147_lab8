@@ -66,9 +66,12 @@ int main(){
 	rt_task_start(&task_h, (void*)high_function, NULL);
 
 	rt_task_sleep(100000000);
-	//rt_sem_broadcast(&sem1);
+	rt_sem_broadcast(&sem1);
 	rt_task_sleep(100000000);
 
+    sleep(5);
+    rt_printf("Main finished\n");
+    
 	rt_sem_delete(&sem1);
 	return 0;
 }
