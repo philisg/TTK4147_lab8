@@ -16,6 +16,7 @@
 RT_MUTEX mutexA, mutexB;
 RT_TASK task_l , task_h;
 RT_SEM sem;
+RT_MUTEX_INFO info_A, info_B;
 
 int set_cpu(int cpu_number);
 
@@ -84,6 +85,7 @@ int main(){
 	mlockall(MCL_CURRENT | MCL_FUTURE);
 	rt_task_shadow(NULL, NULL, 90, T_CPU(0));
 	rt_print_auto_init(1);
+    
 	rt_mutex_create(&mutexA, NULL);
     rt_mutex_create(&mutexB, NULL);
     rt_sem_create(&sem,"Semaphore", 0, S_FIFO);
