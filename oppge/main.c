@@ -106,7 +106,7 @@ int main(){
 	rt_task_sleep(100*1000*1000); //100ms
 
     sleep(5);
-    rt_printf("Main Finished");
+    rt_printf("Main Finished\n");
 
 	rt_mutex_delete(&mutexA);
     rt_mutex_delete(&mutexB);
