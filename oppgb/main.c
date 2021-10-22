@@ -28,8 +28,9 @@ void low_function(void){
     rt_sem_p(&sem1, TM_INFINITE);
     rt_printf("LOW THREAD HAS STARTED! \n");
     busy_wait_us(3);
-    rt_sem_v(&sem1);
     rt_printf("LOW THREAD HAS RUN! \n");
+    rt_sem_v(&sem1);
+
 }
 
 void medium_function(void){
@@ -46,8 +47,8 @@ void high_function(void){
     rt_sem_p(&sem1, TM_INFINITE);
     rt_printf("HIGH THREAD HAS STARTED! \n");
     busy_wait_us(2);
-    rt_sem_v(&sem1);
     rt_printf("HIGH THREAD HAS RUN! \n");
+    rt_sem_v(&sem1);
 }
 
 int main(){
@@ -66,7 +67,7 @@ int main(){
 	rt_task_start(&task_h, (void*)high_function, NULL);
 
 	rt_task_sleep(100000000);
-	rt_sem_broadcast(&sem1);
+	//rt_sem_broadcast(&sem1);
 	rt_task_sleep(100000000);
 
     sleep(5);
