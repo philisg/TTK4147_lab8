@@ -58,7 +58,7 @@ void high_function(void){
     rt_printf("HIGH THREAD READY\n");
     rt_sem_p(&sem, TM_INFINITE);
 
-    rt_task_sleep(TIME_UNIT * 1);
+    rt_task_sleep(TIME_UNIT * 50);
     rt_printf("h-func done sleeping \n");
 
     rt_mutex_acquire(&mutexB, TM_INFINITE);
