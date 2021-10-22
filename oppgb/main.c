@@ -11,7 +11,7 @@
 #include <unistd.h>
 #include <native/sem.h>
 
-#define TIME_UNIT 10000
+#define TIME_UNIT 100000
 
 RT_SEM sem1;
 RT_TASK task_l , task_m, task_h;
@@ -71,7 +71,7 @@ int main(){
 
     sleep(5);
     rt_printf("Main finished\n");
-    
+
 	rt_sem_delete(&sem1);
 	return 0;
 }
